@@ -63,9 +63,22 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		
 	}
-	public void newApple(){               //SOMEWHERE ISN'T IN THE SNAKE'S PATH
-		appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
-		appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+	public void newApple(){
+        //spawn a new apple in a randon place that the snake isn't on
+        while(true){
+            boolean sameSpot = false;
+            appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+            appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+            
+            for(int i = bodyParts;i >= 0; i--) {
+                if (x[i] == appleX && y[i] == appleY) {
+                    sameSpot = true;
+                }
+            }
+            if(!sameSpot){
+                break;
+            }
+        }
 	}
 	public void move(){
 		for(int i = bodyParts;i>0;i--) {
@@ -104,7 +117,7 @@ public class GamePanel extends JPanel implements ActionListener{
 				running = false;
 			}
 		}
-        
+
         //check if head touches left border
         if(x[0] < 0) {
             x[0] = SCREEN_WIDTH;
@@ -141,6 +154,13 @@ public class GamePanel extends JPanel implements ActionListener{
         if( applesEaten > GameData.highestScore){
             GameData.highestScore = applesEaten;
         }
+
+        
+
+
+
+
+
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
