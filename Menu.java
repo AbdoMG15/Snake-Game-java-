@@ -31,7 +31,7 @@ public class Menu extends JFrame implements ActionListener{
         playButton.setBounds(125, 125, 250, 100);
         playButton.addActionListener(this);
         playButton.setText("Press here to play");
-        playButton.setBackground(Color.white);
+        playButton.setBackground(new Color(30, 30, 30));
         playButton.setForeground(Color.red);
         playButton.setFocusable(false);
         playButton.setFont(new Font("MV Boli", Font.PLAIN,25));

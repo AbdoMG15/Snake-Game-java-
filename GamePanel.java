@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements ActionListener{
     boolean running = false;
     Timer timer;
     Random random;
+    JButton menuButton;
 
 
     
@@ -145,7 +146,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		g.setColor(Color.red);
 		g.setFont( new Font("Ink Free",Font.BOLD, 40));
 		FontMetrics metrics1 = getFontMetrics(g.getFont());
-		g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + applesEaten))/2, g.getFont().getSize());
+		g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + applesEaten))/2, 330);
 		//Game Over text
 		g.setColor(Color.red);
 		g.setFont( new Font("MV Boli", Font.PLAIN, 75));
@@ -154,24 +155,46 @@ public class GamePanel extends JPanel implements ActionListener{
         if( applesEaten > GameData.highestScore){
             GameData.highestScore = applesEaten;
         }
-
-        
-
-
-
-
-
+        //Play Button
+        if (menuButton == null) {
+            menuButton = new JButton("Main menu");
+            menuButton.setBounds(125, SCREEN_HEIGHT - 120, 250, 100);
+            menuButton.addActionListener(this);
+            menuButton.setBackground(new Color(30, 30, 30));
+            menuButton.setForeground(Color.red);
+            menuButton.setFocusable(false);
+            menuButton.setFont(new Font("MV Boli", Font.PLAIN, 25));
+            this.add(menuButton);
+            this.revalidate();
+            this.repaint();
+        }
 	}
+
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		if(running) {
-			move();
-			checkApple();
-			checkCollisions();
-		}
-		repaint();
-	}
+    public void actionPerformed(ActionEvent e) {
+        //starting the game
+        if (running) {
+            move();
+            checkApple();
+            checkCollisions();
+            repaint();
+        }
+        
+        //Returning to main menu
+        if (e.getSource() instanceof JButton) {
+            JButton clickedButton = (JButton) e.getSource();
+            if (clickedButton.getText().equals("Main menu")) {
+                int x = this.getTopLevelAncestor().getX();
+                int y = this.getTopLevelAncestor().getY();
+                JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                topFrame.dispose();
+                Menu menu = new Menu();
+                menu.setLocation(x, y);
+            }
+        }
+    }
+
 	
 	public class MyKeyAdapter extends KeyAdapter{
 		@Override
