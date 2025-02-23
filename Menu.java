@@ -21,6 +21,7 @@ public class Menu extends JFrame implements ActionListener{
         this.setVisible(true);
         this.setLayout(null);
         this.getContentPane().setBackground(Color.black);
+        this.setLocationRelativeTo(null);
 
         
         
@@ -62,7 +63,7 @@ public class Menu extends JFrame implements ActionListener{
             int y = this.getY();
 
             this.dispose();
-            GameMenu gamemenu = new GameMenu();
+            GameFrame gamemenu = new GameFrame();
             gamemenu.setLocation(x,y);
         }
     }
