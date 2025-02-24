@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,16 +37,19 @@ public class GamePanel extends JPanel implements ActionListener{
         this.addKeyListener(new MyKeyAdapter());
         startGame();
     }
+
     public void startGame(){
         newApple();
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
     }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         draw(g);
     }
+
     public void draw(Graphics g) {
 		
 		if(running) {
@@ -64,6 +66,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		
 	}
+
 	public void newApple(){
         //spawn a new apple in a randon place that the snake isn't on
         while(true){
@@ -81,7 +84,9 @@ public class GamePanel extends JPanel implements ActionListener{
             }
         }
 	}
+
 	public void move(){
+
 		for(int i = bodyParts;i>0;i--) {
 			x[i] = x[i-1];
 			y[i] = y[i-1];
@@ -91,18 +96,22 @@ public class GamePanel extends JPanel implements ActionListener{
 		case 'U':
 			y[0] = y[0] - UNIT_SIZE;
 			break;
+
 		case 'D':
 			y[0] = y[0] + UNIT_SIZE;
 			break;
+
 		case 'L':
 			x[0] = x[0] - UNIT_SIZE;
 			break;
+
 		case 'R':
 			x[0] = x[0] + UNIT_SIZE;
 			break;
 		}
 		
 	}
+
 	public void checkApple() {
 		if((x[0] == appleX) && (y[0] == appleY)) {
 			bodyParts++;
@@ -110,6 +119,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			newApple();
 		}
 	}
+
 	public void checkCollisions() {
 
         for(int i = bodyParts;i>0;i--) {
@@ -123,14 +133,17 @@ public class GamePanel extends JPanel implements ActionListener{
         if(x[0] < 0) {
             x[0] = SCREEN_WIDTH;
         }
+
         //check if head touches right border
         if(x[0] > SCREEN_WIDTH) {
             x[0] = 0;
         }
+
         //check if head touches top border
         if(y[0] < 0) {
             y[0] = SCREEN_HEIGHT;
         }
+
         //check if head touches bottom border
         if(y[0] > SCREEN_HEIGHT) {
             y[0] = 0;
@@ -142,6 +155,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 	}
 	public void gameOver(Graphics g) {
+
 		//Score
 		g.setColor(Color.red);
 		g.setFont( new Font("Ink Free",Font.BOLD, 40));
@@ -155,6 +169,7 @@ public class GamePanel extends JPanel implements ActionListener{
         if( applesEaten > GameData.highestScore){
             GameData.highestScore = applesEaten;
         }
+
         //Play Button
         if (menuButton == null) {
             menuButton = new JButton("Main menu");
@@ -174,7 +189,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	@Override
     public void actionPerformed(ActionEvent e) {
         //starting the game
-        if (running) {
+        if(running) {
             move();
             checkApple();
             checkCollisions();
@@ -182,8 +197,9 @@ public class GamePanel extends JPanel implements ActionListener{
         }
         
         //Returning to main menu
-        if (e.getSource() instanceof JButton) {
+        if(e.getSource() instanceof JButton) {
             JButton clickedButton = (JButton) e.getSource();
+
             if (clickedButton.getText().equals("Main menu")) {
                 int x = this.getTopLevelAncestor().getX();
                 int y = this.getTopLevelAncestor().getY();
@@ -200,22 +216,28 @@ public class GamePanel extends JPanel implements ActionListener{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			switch(e.getKeyCode()) {
+
 			case KeyEvent.VK_LEFT:
 				if(direction != 'R') {
 					direction = 'L';
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
+
 				if(direction != 'L') {
 					direction = 'R';
 				}
 				break;
+
 			case KeyEvent.VK_UP:
+
 				if(direction != 'D') {
 					direction = 'U';
 				}
 				break;
+
 			case KeyEvent.VK_DOWN:
+
 				if(direction != 'U') {
 					direction = 'D';
 				}

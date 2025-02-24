@@ -11,7 +11,8 @@ public class Menu extends JFrame implements ActionListener{
     
     JButton playButton;
 
-    Menu(){
+    Menu()
+    {
 
         //Menu Frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +57,8 @@ public class Menu extends JFrame implements ActionListener{
 
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) 
+    {
         if(e.getSource() == playButton){
 
             int x = this.getX();
